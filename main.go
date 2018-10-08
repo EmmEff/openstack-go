@@ -198,6 +198,8 @@ func main() {
 
 	flavorURL := *computeURL + "/flavors"
 
+	fmt.Println("Getting supported flavors...")
+
 	resp2, err2 := resty.R().
 		SetHeader("X-Auth-Token", subjectToken).
 		SetResult(&ComputeFlavorsResponse{}).
