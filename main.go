@@ -214,13 +214,21 @@ func getURLFromCatalog(catalog *[]CatalogStruct, name string, intfc string) *str
 	var computeURL *string
 
 	for _, catalog := range *catalog {
-		if catalog.Name == name {
-			for _, endpoint := range catalog.Endpoints {
-				if endpoint.Interface == intfc {
-					computeURL = new(string)
-					*computeURL = endpoint.URL
-				}
+		if catalog.Name != name {
+			continue
+		}
+
+		for _, endpoint := range catalog.Endpoints {
+			if endpoint.Interface == intfc {
+				computeURL = new(string)
+				*computeURL = endpoint.URL
+
+				break
 			}
+		}
+
+		if computeURL != nil {
+			break
 		}
 	}
 
