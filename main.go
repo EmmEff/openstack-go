@@ -250,6 +250,6 @@ func main() {
 	// fmt.Printf("%v\n", resp2.Result().(*ComputeFlavorsResponse).Flavors)
 
 	for _, flavor := range resp2.Result().(*ComputeFlavorsResponse).Flavors {
-		fmt.Printf("%s\n", flavor.Name)
+		fmt.Printf("%s %s\n", flavor.Name, flavor.ID)
 	}
 }
