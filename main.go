@@ -197,7 +197,6 @@ func main() {
 	fmt.Printf("%v\n", url)
 
 	resp, errblah := resty.R().
-		SetHeader("Content-Type", "application/json").
 		SetBody(b).
 		SetResult(&AuthSuccess{}).
 		// SetError(&AuthError{}).
