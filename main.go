@@ -178,9 +178,6 @@ func main() {
 
 	fmt.Printf("Response status code: %v\n", resp.StatusCode())
 
-	// Use the following snippet to parse the timestamps returned by OpenStack
-	// fmt.Println(time.Parse(time.RFC3339, resp.Result().(*AuthSuccess).Token.ExpiresAt))
-
 	expiresAt, _ := time.Parse(time.RFC3339, resp.Result().(*AuthSuccess).Token.ExpiresAt)
 
 	fmt.Println("         Current time:", time.Now().UTC())
