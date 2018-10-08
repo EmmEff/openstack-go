@@ -209,6 +209,9 @@ func main() {
 
 	var computeURL *string
 
+	// Use the following snippet to parse the timestamps returned by OpenStack
+	// fmt.Println(time.Parse(time.RFC3339, resp.Result().(*AuthSuccess).Token.ExpiresAt))
+
 	for _, catalog := range *(resp.Result().(*AuthSuccess).Token.Catalog) {
 		if catalog.Name == "nova" {
 			for _, endpoint := range catalog.Endpoints {
