@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"net/http"
 	"os"
 	"strings"
 
@@ -154,6 +155,7 @@ func main() {
 	if err != nil {
 		fmt.Println("Error:", err)
 
+		os.Exit(1)
 	}
 
 	resty.SetHeader("Accept", "application/json")
@@ -197,9 +199,14 @@ func main() {
 	if err2 != nil {
 		fmt.Printf("Error: %v\n", err2)
 
+		os.Exit(1)
 	}
 
-	fmt.Printf("Response status code: %v\n", resp2.StatusCode())
+	if resp2.StatusCode() != http.StatusOK {
+		fmt.Printf("Error: HTTP status %d\n", resp2.StatusCode())
+
+		os.Exit(1)
+	}
 
 	for _, flavor := range resp2.Result().(*ComputeFlavorsResponse).Flavors {
 		fmt.Printf("%s %s\n", flavor.Name, flavor.ID)
