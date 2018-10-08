@@ -15,6 +15,7 @@ type domain struct {
 	Name string `json:"name"`
 }
 
+// User is a struct representing the user in the OpenStack auth request
 type User struct {
 	Domain struct {
 		Name string `json:"name"`
@@ -61,6 +62,7 @@ type openstackAuthStruct struct {
 	Auth nested `json:"auth"`
 }
 
+// CatalogStruct represents the auth response url endpoint catalog
 type CatalogStruct struct {
 	Endpoints []struct {
 		ID        string `json:"id"`
@@ -74,6 +76,7 @@ type CatalogStruct struct {
 	Type string `json:"type"`
 }
 
+// AuthSuccess maps a succesful OpenStack auth request
 type AuthSuccess struct {
 	Token struct {
 		AuditIDs  []string         `json:"audit_ids"`
@@ -106,6 +109,7 @@ type AuthSuccess struct {
 	} `json:"token"`
 }
 
+// ComputeFlavorsResponse represents successful compute flavors response
 type ComputeFlavorsResponse struct {
 	Flavors []struct {
 		ID    string `json:"id"`
