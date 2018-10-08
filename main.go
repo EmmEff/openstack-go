@@ -9,40 +9,11 @@ import (
 	resty "gopkg.in/resty.v1"
 )
 
-// {
-// 	"auth": {
-// 	  "identity": {
-// 		"methods": [
-// 		  "password"
-// 		],
-// 		"password": {
-// 		  "user": {
-// 			"domain": {
-// 			  "name": "$OS_USER_DOMAIN_NAME"
-// 			},
-// 			"name": "$OS_USERNAME",
-// 			"password": "$OS_PASSWORD"
-// 		  }
-// 		}
-// 	  },
-// 	  "scope": {
-// 		"project": {
-// 		  "domain": {
-// 			"name": "$OS_PROJECT_DOMAIN_NAME"
-// 		  },
-// 		  "name": "$OS_PROJECT_NAME"
-// 		}
-// 	  }
-// 	}
-//   }
-
 type domain struct {
-	// ID   *string `json:"id"`
 	Name string `json:"name"`
 }
 
 type User struct {
-	// Domain   domain `json:"domain"`
 	Domain struct {
 		Name string `json:"name"`
 	} `json:"domain"`
@@ -87,12 +58,6 @@ type nested struct {
 type openstackAuthStruct struct {
 	Auth nested `json:"auth"`
 }
-
-// type testme struct {
-// 	Nested struct {
-// 		Name string `json:"name"`
-// 	} `json:"nested"`
-// }
 
 type CatalogStruct struct {
 	Endpoints []struct {
@@ -221,8 +186,6 @@ func main() {
 
 	fmt.Printf("Compute URL: %s\n", *computeURL)
 
-	// fmt.Printf("%v\n", resp.Header()["X-Subject-Token"])
-
 	subjectToken := resp.Header()["X-Subject-Token"][0]
 
 	flavorURL := *computeURL + "/flavors"
@@ -237,10 +200,6 @@ func main() {
 	}
 
 	fmt.Printf("Response status code: %v\n", resp2.StatusCode())
-
-	// fmt.Printf("%v\n", resp.Result().(*AuthSuccess).Token.Catalog)
-
-	// fmt.Printf("%v\n", resp2.Result().(*ComputeFlavorsResponse).Flavors)
 
 	for _, flavor := range resp2.Result().(*ComputeFlavorsResponse).Flavors {
 		fmt.Printf("%s %s\n", flavor.Name, flavor.ID)
