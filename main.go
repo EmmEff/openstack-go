@@ -218,7 +218,7 @@ func main() {
 	}
 
 	for _, flavor := range resp2.Result().(*ComputeFlavorsResponse).Flavors {
-		fmt.Printf("%s %s\n", flavor.Name, flavor.ID)
+		fmt.Printf("  - %s (id: %s)\n", flavor.Name, flavor.ID)
 	}
 }
 
