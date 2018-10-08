@@ -64,9 +64,14 @@ type identity struct {
 	Password password `json:"password"`
 }
 
+type projectdomain struct {
+	ID   *string `json:"id,omitempty"`
+	Name *string `json:"name,omitempty"`
+}
+
 type project struct {
-	Domain domain `json:"domain"`
-	Name   string `json:"name"`
+	Domain projectdomain `json:"domain"`
+	Name   string        `json:"name"`
 }
 
 type scope struct {
@@ -143,6 +148,8 @@ type ComputeFlavorsResponse struct {
 }
 
 func main() {
+	value := os.Getenv("OS_PROJECT_DOMAIN_ID")
+
 	blah := openstackAuthStruct{
 		Auth: nested{
 			Identity: identity{
@@ -159,9 +166,8 @@ func main() {
 			},
 			Scope: scope{
 				Project: project{
-					Domain: domain{
-						// Name: os.Getenv("OS_PROJECT_DOMAIN_NAME"),
-						Name: "Default",
+					Domain: projectdomain{
+						ID: &value,
 					},
 					Name: os.Getenv("OS_PROJECT_NAME"),
 				},
