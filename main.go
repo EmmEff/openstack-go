@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"strings"
 
 	resty "gopkg.in/resty.v1"
 )
@@ -148,6 +149,13 @@ type ComputeFlavorsResponse struct {
 }
 
 func main() {
+	osAuthURL := strings.Trim(os.Getenv("OS_AUTH_URL"), "/")
+
+	if osAuthURL == "" {
+		fmt.Printf("Error: environment not set (OS_AUTH_URL)\n")
+		os.Exit(1)
+	}
+
 	value := os.Getenv("OS_PROJECT_DOMAIN_ID")
 
 	blah := openstackAuthStruct{
@@ -184,9 +192,7 @@ func main() {
 	resty.SetHeader("Accept", "application/json")
 	resty.SetHeader("Content-type", "application/json")
 
-	osAuthURL := os.Getenv("OS_AUTH_URL")
-
-	url := osAuthURL + "auth/tokens"
+	url := osAuthURL + "/auth/tokens"
 
 	fmt.Printf("%v\n", url)
 
