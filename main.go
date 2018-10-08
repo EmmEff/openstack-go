@@ -94,25 +94,27 @@ type openstackAuthStruct struct {
 // 	} `json:"nested"`
 // }
 
+type CatalogStruct struct {
+	Endpoints []struct {
+		ID        string `json:"id"`
+		Interface string `json:"interface"`
+		Region    string `json:"region"`
+		RegionID  string `json:"region_id"`
+		URL       string `json:"url"`
+	} `json:"endpoints"`
+	ID   string `json:"id"`
+	Name string `json:"name"`
+	Type string `json:"type"`
+}
+
 type AuthSuccess struct {
 	Token struct {
-		AuditIDs []string `json:"audit_ids"`
-		Catalog  *[]struct {
-			Endpoints []struct {
-				ID        string `json:"id"`
-				Interface string `json:"interface"`
-				Region    string `json:"region"`
-				RegionID  string `json:"region_id"`
-				URL       string `json:"url"`
-			} `json:"endpoints"`
-			ID   string `json:"id"`
-			Name string `json:"name"`
-			Type string `json:"type"`
-		} `json:"catalog"`
-		ExpiresAt string   `json:"expires_at"`
-		IsDomain  bool     `json:"is_domain"`
-		IssuedAt  string   `json:"issued_at"`
-		Methods   []string `json:"methods"`
+		AuditIDs  []string         `json:"audit_ids"`
+		Catalog   *[]CatalogStruct `json:"catalog"`
+		ExpiresAt string           `json:"expires_at"`
+		IsDomain  bool             `json:"is_domain"`
+		IssuedAt  string           `json:"issued_at"`
+		Methods   []string         `json:"methods"`
 		Project   struct {
 			Domain struct {
 				ID   string `json:"id"`
