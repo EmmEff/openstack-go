@@ -209,22 +209,10 @@ func main() {
 
 	fmt.Printf("Response status code: %v\n", resp.StatusCode())
 
-	var computeURL *string
-
 	// Use the following snippet to parse the timestamps returned by OpenStack
 	// fmt.Println(time.Parse(time.RFC3339, resp.Result().(*AuthSuccess).Token.ExpiresAt))
 
-	for _, catalog := range *(resp.Result().(*AuthSuccess).Token.Catalog) {
-		if catalog.Name == "nova" {
-			for _, endpoint := range catalog.Endpoints {
-				if endpoint.Interface == "public" {
-					computeURL = new(string)
-					*computeURL = endpoint.URL
-				}
-			}
-		}
-	}
-
+	computeURL := getPublicComputeURL(resp.Result().(*AuthSuccess).Token.Catalog)
 	if computeURL == nil {
 		fmt.Printf("Error: unable to determine compute URL\n")
 
@@ -257,4 +245,25 @@ func main() {
 	for _, flavor := range resp2.Result().(*ComputeFlavorsResponse).Flavors {
 		fmt.Printf("%s %s\n", flavor.Name, flavor.ID)
 	}
+}
+
+func getPublicComputeURL(catalog *[]CatalogStruct) *string {
+	return getURLFromCatalog(catalog, "nova", "public")
+}
+
+func getURLFromCatalog(catalog *[]CatalogStruct, name string, intfc string) *string {
+	var computeURL *string
+
+	for _, catalog := range *catalog {
+		if catalog.Name == name {
+			for _, endpoint := range catalog.Endpoints {
+				if endpoint.Interface == intfc {
+					computeURL = new(string)
+					*computeURL = endpoint.URL
+				}
+			}
+		}
+	}
+
+	return computeURL
 }
