@@ -159,6 +159,7 @@ func main() {
 		os.Exit(1)
 	}
 
+	// globally set headers
 	resty.SetHeader("Accept", "application/json")
 	resty.SetHeader("Content-type", "application/json")
 
