@@ -207,24 +207,17 @@ func main() {
 
 	fmt.Printf("Response status code: %v\n", resp.StatusCode())
 
-	// fmt.Printf("%v\n", resp.Result().(*AuthSuccess).Token.Catalog)
-
 	var computeURL *string
 
 	for _, catalog := range *(resp.Result().(*AuthSuccess).Token.Catalog) {
 		if catalog.Name == "nova" {
-			fmt.Printf("%v\n", catalog)
-
 			for _, endpoint := range catalog.Endpoints {
 				if endpoint.Interface == "public" {
-					// fmt.Printf("%s\n", endpoint.URL)
-
 					computeURL = new(string)
 					*computeURL = endpoint.URL
 				}
 			}
 		}
-		// fmt.Printf("%v\n", catalog.Endpoints)
 	}
 
 	if computeURL == nil {
