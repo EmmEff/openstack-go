@@ -1,3 +1,7 @@
+/*
+This sample package implements a rudimentary OpenStack client
+*/
+
 package main
 
 import (
